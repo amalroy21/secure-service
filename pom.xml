@@ -8,7 +8,7 @@
 		<version>2.2.0.M1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.utd.cloudsecurity</groupId>
+	<groupId>com.utd</groupId>
 	<artifactId>secure-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>secure-service</name>
