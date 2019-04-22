@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.utd.secureservice.outbound.response.ApiResponse;
 import com.utd.secureservice.service.ISecureService;
 
@@ -32,7 +29,6 @@ public class SecureServiceController {
     
     /**
      * This controller helps to retrieve Packages and Products Data from the file.
-     * @param MultipartFile
      * @return ResponseEntity<Response>
      */
     @GetMapping(value = "/v1/products")
@@ -48,6 +44,4 @@ public class SecureServiceController {
         logger.trace("Exiting UploadProductsServiceController.processProducts() Method");
         return responseEntity;
     }
-    
-    
 }
