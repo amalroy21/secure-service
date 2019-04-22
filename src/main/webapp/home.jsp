@@ -1,5 +1,6 @@
 <html><head><title><template:get name='title'/></title></head>
 <body>
+
 <table>
    <tr valign='top'><td><template:get name='sidebar'/></td>
       <td><table>
