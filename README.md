@@ -13,3 +13,6 @@
 1. open a terminal/console window
 3. `cd path/to/secure-service`
 4. `mvn clean package` to build the services
+5.  mvn spring-boot:run
+
+HomeController.java  method:getSubmitPage is where the encrypted browser data is decrypted.
