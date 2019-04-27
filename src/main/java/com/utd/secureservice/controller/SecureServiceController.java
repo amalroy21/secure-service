@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import com.utd.secureservice.outbound.response.ApiResponse;
 import com.utd.secureservice.service.ISecureService;
 
+import java.security.NoSuchAlgorithmException;
+
 
 /**
  * This Controller handles persisting vehicle Products to DB
@@ -18,7 +20,6 @@ import com.utd.secureservice.service.ISecureService;
 @CrossOrigin(allowCredentials = "false")
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class SecureServiceController {
-	
 	/**
 	 * Represents logger
 	 */
@@ -31,17 +32,16 @@ public class SecureServiceController {
      * This controller helps to retrieve Packages and Products Data from the file.
      * @return ResponseEntity<Response>
      */
-    @GetMapping(value = "/v1/products")
-
-    public ResponseEntity<ApiResponse> getEncryptionKey(HttpHeaders httpHeaders) {
+    @GetMapping(value = "/v1/getKeys")
+    @ResponseBody
+    public String getEncryptionKey(@RequestParam String userId) throws NoSuchAlgorithmException {
+        long t1  = System.nanoTime();
     	logger.trace("Entering UploadProductsServiceController.processProducts() Method");
     	ResponseEntity<ApiResponse> responseEntity = null;
-		try {
-			responseEntity = secureService.getEncryptionKey(httpHeaders);
-		} catch (Exception e) {
-			logger.error("Error Occured while processing the uploaded file", e);
-		}
+
+    	responseEntity = secureService.getEncryptionKey(userId);
         logger.trace("Exiting UploadProductsServiceController.processProducts() Method");
-        return responseEntity;
+		System.out.println("get Keys:" + (System.nanoTime() - t1)/1000 + "micros");
+        return (String) responseEntity.getBody().getPayload().getData();
     }
 }

@@ -13,7 +13,6 @@ import com.utd.secureservice.controller.SecureServiceController;
  * {@link UploadProductsServiceController}
  *
  */
-@RestControllerAdvice(assignableTypes = { SecureServiceController.class })
 public class SecureServiceControllerAdvice {
 
 	/**

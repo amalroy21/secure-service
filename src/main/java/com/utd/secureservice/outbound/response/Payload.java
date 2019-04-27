@@ -16,13 +16,17 @@ public class Payload<T> {
 	 * This represents the API response for publicKey
 	 */
 	@JsonInclude(Include.NON_NULL)
-	private List<String> publicKey;
+	private T data;
 
-	public List<String> getPublicKey() {
-		return publicKey;
+	public Payload(T data) {
+		this.data = data;
 	}
 
-	public void setPublicKey(List<String> publicKey) {
-		this.publicKey = publicKey;
+	public T getData() {
+		return data;
+	}
+
+	public void setData(T data) {
+		this.data = data;
 	}
 }

@@ -12,6 +12,7 @@
 	<artifactId>secure-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>secure-service</name>
+	<packaging>jar</packaging>
 	<description>Secure channel for communication</description>
 
 	<properties>
@@ -43,6 +44,11 @@
 			<artifactId>tomcat-jasper</artifactId>
 			<version>9.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>bouncycastle</groupId>
+			<artifactId>bcprov-jdk16</artifactId>
+			<version>140</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -52,6 +58,11 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/webapp</directory>
+			</resource>
+		</resources>
 	</build>
 
 	<repositories>

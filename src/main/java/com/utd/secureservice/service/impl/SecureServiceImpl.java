@@ -1,8 +1,14 @@
 package com.utd.secureservice.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.util.*;
 
+import com.utd.secureservice.domain.FormattedKey;
+import com.utd.secureservice.outbound.response.Payload;
+import com.utd.secureservice.util.JCryptionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -24,34 +30,56 @@ import com.utd.secureservice.service.ISecureService;
 public class SecureServiceImpl implements ISecureService {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecureServiceImpl.class);
+	private static final Random random = new Random();
+	public static Map<String, FormattedKey> userKeyMap = new HashMap();
 
 
 	/**
 	 * This method performs logic to persist comments
-	 * 
-	 * @param commentsRequest {@link CommentsRequest}
-	 * @param httpHeaders     {@link HttpHeaders}
-	 * @return response {@link ResponseEntity<Response>}
+	 *
+	 * @return response {@link ResponseEntity<ApiResponse>}
 	 */
 	@Override
-	public ResponseEntity<ApiResponse> getEncryptionKey(HttpHeaders httpHeaders) {
+	public ResponseEntity<ApiResponse> getEncryptionKey(String userId) throws NoSuchAlgorithmException {
 
 		logger.trace("Entering ProductsReviewServiceImpl.postComments() Method");
+		FormattedKey formattedKey = userKeyMap.get(userId);
+		if(formattedKey != null) {
+			ApiResponse apiResponse = new ApiResponse(new Status(new ArrayList<>()), new Payload<String>(formattedKey.publicKey));
+			ResponseEntity<ApiResponse> response = null;
+
+			apiResponse.getStatus().getMessages().add(new Message("", "", ""));
+			response = new ResponseEntity<>(apiResponse, HttpStatus.OK);
+			return response;
+		}
 		Status status = null;
 		ApiResponse apiResponse = null;
-		List<Message> messages = new ArrayList<>();
-		status = new Status(messages);
-		apiResponse = new ApiResponse(status, null);
+		status = new Status(new ArrayList<>());
+
+		JCryptionUtil jCryptionUtil = new JCryptionUtil();
+		KeyPair keys = jCryptionUtil.generateKeypair(512);
+
+		String e = JCryptionUtil.getPublicKeyExponent(keys);
+		String n = JCryptionUtil.getPublicKeyModulus(keys);
+		String md = String.valueOf(JCryptionUtil.getMaxDigits(512));
+
+		StringBuffer output = new StringBuffer();
+		output.append("{\"e\":\"");
+		output.append(e);
+		output.append("\",\"n\":\"");
+		output.append(n);
+		output.append("\",\"maxdigits\":\"");
+		output.append(md);
+		output.append("\"}");
+
+		String key = output.toString().replaceAll("\r", "").replaceAll("\n", "").trim();
+
+		userKeyMap.put(userId, new FormattedKey(key, keys));
+		apiResponse = new ApiResponse(status, new Payload<String>(key));
 		ResponseEntity<ApiResponse> response = null;
-		try {
-			apiResponse.getStatus().getMessages().add(new Message("","",""));
-			response = new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		apiResponse.getStatus().getMessages().add(new Message("","",""));
+		response = new ResponseEntity<>(apiResponse, HttpStatus.OK);
 
-		} catch (Exception exception) {
-			throw exception;
-		}
-
-		logger.trace("Exiting ProductsReviewServiceImpl.postComments() Method");
 		return response;
 	}
 }
