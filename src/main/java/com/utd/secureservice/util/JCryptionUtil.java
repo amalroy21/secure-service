@@ -201,11 +201,11 @@ public class JCryptionUtil {
 
     /**
      * @param args
-     */
+     *//*
     public static void main(String[] args) {
         JCryptionUtil jCryption = new JCryptionUtil();
         System.out.println(jCryption.toPublicKeyString());
-    }
+    }*/
 
     /**
      * @return

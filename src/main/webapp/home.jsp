@@ -38,7 +38,7 @@
 </form>
 </body>
 <script Language="JavaScript">
-        var domain = "http://localhost:8080";
+        var domain = "http://localhost:9090";
         var keys = null;
         function getKeys() {
         	$.jCryption.getKeys(domain + "/v1/getKeys?userId=ACC1111", function(

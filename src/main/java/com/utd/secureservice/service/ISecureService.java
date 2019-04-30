@@ -19,4 +19,6 @@ public interface ISecureService {
 	 * @return {@link ResponseEntity<Response>}
 	 */
 	public ResponseEntity<ApiResponse> getEncryptionKey(String userId) throws NoSuchAlgorithmException;
+
+	ResponseEntity<ApiResponse> persistSensitiveInfo(String info, String userId);
 }
