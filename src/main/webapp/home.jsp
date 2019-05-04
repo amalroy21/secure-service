@@ -41,7 +41,7 @@
         var domain = "http://localhost:9090";
         var keys = null;
         function getKeys() {
-        	$.jCryption.getKeys(domain + "/v1/getKeys?userId=ACC1111", function(
+        	$.jCryption.getKeys(domain + "/v1/getPublicKey?userId=ACC1111", function(
         			receivedKeys) {
         		keys = receivedKeys;
         	});
