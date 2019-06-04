@@ -30,7 +30,7 @@ public class SecureServiceController {
      * This controller helps to retrieve Packages and Products Data from the file.
      * @return ResponseEntity<Response>
      */
-    @GetMapping(value = "/v1/getKeys")
+    @GetMapping(value = "/v1/getPublicKey")
     @ResponseBody
     public String getEncryptionKey(@RequestParam String userId) throws NoSuchAlgorithmException {
         long t1  = System.nanoTime();
