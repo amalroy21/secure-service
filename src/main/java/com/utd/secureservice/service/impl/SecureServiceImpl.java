@@ -1,11 +1,8 @@
 package com.utd.secureservice.service.impl;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -28,15 +25,13 @@ import com.utd.secureservice.outbound.response.Status;
 import com.utd.secureservice.service.ISecureService;
 
 /**
- * This Service class provides method to Post Comments on a Product && method to
- * Update Product Status.
+ * This Service class provides methods for secure communication.
  *
  */
 @Service
 public class SecureServiceImpl implements ISecureService {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecureServiceImpl.class);
-	//private static final Random random = new Random();
 	public static Map<String, FormattedKey> userKeyMap = new HashMap<>();
 
 	@Autowired
@@ -105,7 +100,6 @@ public class SecureServiceImpl implements ISecureService {
 		try {
 			file = getFile(info);
 			aWSTransferService.uploadUserFileToAws(file);
-			//FileOutputStream keyFile = getKeyFile(userKeyMap.get(userId));
 			persistUserInfo(userId,file.getName());
 		
 		} catch (IOException e) {
@@ -142,16 +136,6 @@ public class SecureServiceImpl implements ISecureService {
         writer.close();
         return file;
 	}
-	
-	/*private FileOutputStream getKeyFile(FormattedKey key) throws IOException {
-		String fileName = generateRandomFileName();
-		FileOutputStream file = new FileOutputStream(fileName);
-        ObjectOutputStream objectOut = new ObjectOutputStream(file);
-        objectOut.writeObject(key);
-        objectOut.close();
-        System.out.println("The Object  was succesfully written to a file");
-        return file;
-	}*/
 	
 	private String generateRandomFileName() {
 		Random rand=new Random();

@@ -5,4 +5,4 @@ spring:
       uri: mongodb://localhost:27017
       
 server:
-  port: 9090
+  port: 5000
